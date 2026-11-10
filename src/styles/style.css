@@ -1,0 +1,459 @@
+/* ─── Two-column layout ──────────────────────────────────────── */
+.left {
+  width: 60%;
+  flex-shrink: 0;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.right {
+  width: 40%;
+  flex-shrink: 0;
+  min-width: 0;
+  padding: 24px;
+  background: var(--surface-raised);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ─── Buttons ────────────────────────────────────────────────── */
+button.main {
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: var(--r-md);
+  color: #fff;
+  background: linear-gradient(135deg, #D4A630 0%, var(--gold-dark) 100%);
+  border: none;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  box-shadow: 0 4px 16px var(--gold-glow);
+}
+button.main:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 6px 24px var(--gold-glow);
+}
+
+button.secondary {
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: var(--r-md);
+  color: var(--danger);
+  background: transparent;
+  border: 1px solid rgba(224, 85, 85, 0.22);
+  font-weight: 500;
+  font-size: 13px;
+  cursor: pointer;
+}
+button.secondary:hover {
+  background: var(--danger-tint);
+  border-color: var(--danger);
+  filter: none;
+}
+
+button.tertiary {
+  padding: 8px 4px;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  font-weight: 400;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+button.tertiary:hover { color: var(--text); filter: none; }
+
+/* ─── Card ───────────────────────────────────────────────────── */
+.card {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-detail { border-color: var(--border-raised); }
+
+/* ─── Payment information card (left) ───────────────────────── */
+.info-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.info-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+
+.info-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  text-align: right;
+}
+
+/* ─── Payment method rows ────────────────────────────────────── */
+.button-set {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-pm {
+  border: 1.5px solid var(--border);
+  padding: 14px 16px;
+  border-radius: var(--r-lg);
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  cursor: pointer;
+  background: var(--surface);
+  user-select: none;
+}
+.btn-pm:hover {
+  background: var(--surface-raised);
+  border-color: var(--border-raised);
+  filter: none;
+}
+.btn-pm--selected {
+  border-color: var(--gold) !important;
+  background: var(--gold-tint) !important;
+  box-shadow: 0 0 0 1px var(--gold) inset;
+}
+
+.pm-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ─── Right panel: detail area ───────────────────────────────── */
+.detail-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-placeholder {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px dashed var(--border-raised);
+  border-radius: var(--r-lg);
+  min-height: 100px;
+}
+
+.placeholder-hint {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 20px;
+}
+
+/* ─── Right panel: instructions + actions ────────────────────── */
+.instructions-actions {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ─── Accordion ──────────────────────────────────────────────── */
+.accordion-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  gap: 8px;
+}
+.accordion-toggle:active { transform: none; }
+
+.accordion-chevron {
+  color: var(--text-secondary);
+  font-size: 18px;
+  line-height: 1;
+  transform: rotate(-90deg);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+.accordion-chevron.open { transform: rotate(90deg); }
+
+/* ─── CTA button group ───────────────────────────────────────── */
+.btn-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ─── Bank detail data-label ─────────────────────────────────── */
+.data-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ─── QR image ───────────────────────────────────────────────── */
+.imgs {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.imgs img {
+  width: 100%;
+  max-width: 260px;
+  border-radius: var(--r-md);
+}
+
+/* ─── QR modal ───────────────────────────────────────────────── */
+.qr-thumb {
+  cursor: zoom-in;
+}
+
+.modal-qr { z-index: 200; }
+
+.qr-modal-img {
+  position: relative;
+  z-index: 2;
+  padding: 16px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-raised);
+  border-radius: var(--r-xl);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
+}
+.qr-modal-img img {
+  display: block;
+  width: min(80vw, 400px);
+  height: auto;
+  border-radius: var(--r-md);
+}
+.qr-close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+}
+
+.btn-download {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: var(--r-md);
+  background: var(--gold-tint);
+  border: 1px solid rgba(201, 151, 28, 0.3);
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btn-download:hover {
+  background: rgba(201, 151, 28, 0.15);
+  border-color: var(--gold);
+}
+
+/* ─── Copy row ───────────────────────────────────────────────── */
+.copy-set {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ─── Mobile: payment detail bottom sheet ────────────────────── */
+.mobile-detail-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  align-items: flex-end;
+}
+
+.mobile-detail-sheet {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  background: var(--surface-raised);
+  border-top: 1px solid var(--border-raised);
+  border-radius: 24px 24px 0 0;
+  padding: 12px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: sheetIn 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+@keyframes sheetIn {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+.sheet-handle {
+  width: 36px;
+  height: 4px;
+  background: var(--border-raised);
+  border-radius: 100px;
+  margin: 0 auto 4px;
+  flex-shrink: 0;
+}
+
+.sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sheet-close {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: var(--surface-high);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--text-secondary);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.sheet-close:hover { color: var(--text); border-color: var(--border-raised); filter: none; }
+
+/* ─── Mobile: fixed action bottom sheet ─────────────────────── */
+.mobile-bottom-sheet {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface-raised);
+  border-top: 1px solid var(--border);
+  padding: 16px 20px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  z-index: 90;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ─── Status pages (processing / failed) ────────────────────── */
+.status {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  padding: 48px 40px;
+  max-width: 580px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ─── Ad image ───────────────────────────────────────────────── */
+.ad {
+  max-width: 420px;
+  width: 100%;
+  border-radius: var(--r-lg);
+}
+
+/* ─── Utility ────────────────────────────────────────────────── */
+.center { display: flex; justify-content: center; }
+
+/* ─── Enter amount page ──────────────────────────────────────── */
+.enter-section {
+  align-items: center;
+  justify-content: center;
+}
+
+.enter-card {
+  padding: 36px !important;
+  max-width: 380px;
+  width: calc(100% - 40px);
+  gap: 28px !important;
+}
+
+.enter-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.enter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.change-amount-btn {
+  align-self: flex-start;
+  padding: 4px 0 !important;
+  font-size: 12px !important;
+}
+
+/* ─── Mobile adjustments ─────────────────────────────────────── */
+@media screen and (max-width: 640px) {
+  .left {
+    width: 100%;
+    padding: 16px;
+    gap: 12px;
+    padding-bottom: 160px;
+  }
+
+  .right { display: none; }
+  .mobile-bottom-sheet { display: flex; }
+  .mobile-detail-overlay.open { display: flex; }
+
+  .enter-card { padding: 24px !important; }
+  .status { padding: 32px 20px; }
+}
