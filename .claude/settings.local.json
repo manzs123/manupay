@@ -5,7 +5,8 @@
       "Bash(Select-Object Name, Mode)",
       "Bash(Format-Table -AutoSize)",
       "Bash(npm install *)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(git remote *)"
     ]
   }
 }
