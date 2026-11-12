@@ -24,7 +24,8 @@ export default function PaymentPage() {
   const [cancelOpen, setCancelOpen] = useState(false)
   const [mobileDetailOpen, setMobileDetailOpen] = useState(false)
   const [qrOpen, setQrOpen] = useState(false)
-  const [instructionsOpen, setInstructionsOpen] = useState(false)
+  const [webInstructionsOpen, setWebInstructionsOpen] = useState(true)
+  const [mobileInstructionsOpen, setMobileInstructionsOpen] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
   const [methodError, setMethodError] = useState(false)
 
@@ -260,11 +261,11 @@ export default function PaymentPage() {
 
           <div className="instructions-actions">
             <div className="card">
-              <button className="accordion-toggle" onClick={() => setInstructionsOpen(o => !o)}>
+              <button className="accordion-toggle" onClick={() => setWebInstructionsOpen(o => !o)}>
                 <span className="par" style={{ fontWeight: 600 }}>Payment Instructions</span>
-                <span className={`accordion-chevron${instructionsOpen ? ' open' : ''}`}>‹</span>
+                <span className={`accordion-chevron${webInstructionsOpen ? ' open' : ''}`}>‹</span>
               </button>
-              {instructionsOpen && (
+              {webInstructionsOpen && (
                 <div className="sub">
                   <ol>
                     <li>Select a payment method.</li>
@@ -283,11 +284,11 @@ export default function PaymentPage() {
       {/* Mobile: fixed bottom sheet — instructions + buttons */}
       <div className="mobile-bottom-sheet">
         <div className="card mobile-instructions">
-          <button className="accordion-toggle" onClick={() => setInstructionsOpen(o => !o)}>
+          <button className="accordion-toggle" onClick={() => setMobileInstructionsOpen(o => !o)}>
             <span className="par" style={{ fontWeight: 600 }}>Payment Instructions</span>
-            <span className={`accordion-chevron${instructionsOpen ? ' open' : ''}`}>‹</span>
+            <span className={`accordion-chevron${mobileInstructionsOpen ? ' open' : ''}`}>‹</span>
           </button>
-          {instructionsOpen && (
+          {mobileInstructionsOpen && (
             <div className="sub">
               <ol>
                 <li>Select a payment method.</li>
