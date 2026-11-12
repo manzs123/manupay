@@ -6,7 +6,11 @@
       "Bash(Format-Table -AutoSize)",
       "Bash(npm install *)",
       "Bash(npm run *)",
-      "Bash(git remote *)"
+      "Bash(git remote *)",
+      "Bash(Get-ChildItem -Path \"D:\\\\GitHub\\\\manupay\" -Directory)",
+      "Bash(Select-Object Name)",
+      "Bash(python -c \"from PIL import Image; print\\('ok'\\)\")",
+      "Bash(python *)"
     ]
   }
 }

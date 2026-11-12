@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate, Navigate } from 'react-router-dom'
 import gcashImg from '../assets/gcash.png'
 import securityBankImg from '../assets/securitybank.png'
 import cashImg from '../assets/cash.png'
-import gcashQrImg from '../assets/gcash_qr.jpg'
+import gcashQrImg from '../assets/gcash-qr.jpg'
 import copyImg from '../assets/copy.png'
 import Toast from '../components/Toast'
 
@@ -24,8 +24,9 @@ export default function PaymentPage() {
   const [cancelOpen, setCancelOpen] = useState(false)
   const [mobileDetailOpen, setMobileDetailOpen] = useState(false)
   const [qrOpen, setQrOpen] = useState(false)
-  const [instructionsOpen, setInstructionsOpen] = useState(true)
+  const [instructionsOpen, setInstructionsOpen] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
+  const [methodError, setMethodError] = useState(false)
 
   const copyToClipboard = (text: string, label: string) => {
     const finish = () => {
@@ -52,7 +53,17 @@ export default function PaymentPage() {
 
   const handleSelect = (method: PaymentMethod) => {
     setSelected(method)
+    setMethodError(false)
     setMobileDetailOpen(true)
+  }
+
+  const handlePaid = () => {
+    if (!selected) {
+      setMethodError(true)
+      document.getElementById('method-section')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      return
+    }
+    navigate(`/processing?amount=${amount}&method=${selected}`)
   }
 
   if (!amount) return <Navigate to="/" replace />
@@ -68,6 +79,21 @@ export default function PaymentPage() {
         <a href={gcashQrImg} download="gcash-qr.jpg" className="btn-download">
           ↓ Download QR
         </a>
+        <div className="data">
+          <div className="copy-set">
+            <div className="par" style={{ flex: 1 }}>
+              <span className="data-label">GCash Number</span>
+              <br />09177009305
+            </div>
+            <img className="iconbtn" onClick={() => copyToClipboard('09177009305', 'Account number')} style={{ width: 18 }} src={copyImg} alt="Copy" />
+          </div>
+          <div className="copy-set">
+            <div className="par" style={{ flex: 1 }}>
+              <span className="data-label">Account Name</span>
+              <br />MA***L RA****L M.
+            </div>
+          </div>
+        </div>
       </>
     )
     if (selected === 'sb') return (
@@ -104,7 +130,7 @@ export default function PaymentPage() {
 
   const renderButtons = () => (
     <div className="btn-stack">
-      <button className="main" onClick={() => navigate('/processing')}>I'VE PAID</button>
+      <button className="main" onClick={handlePaid}>I've Paid</button>
       <button className="secondary" onClick={() => setCancelOpen(true)}>No, I don't want to pay</button>
       <button className="tertiary change-amount-btn" onClick={() => navigate('/')}>← Change amount</button>
     </div>
@@ -118,14 +144,14 @@ export default function PaymentPage() {
       {cancelOpen && (
         <div className="modal">
           <div className="dialog">
-            <div className="title">Are you sure you're not paying anymore?</div>
-            <div className="par">You might have accidentally clicked it out of curiosity.</div>
+            <div className="title">You're really just gonna leave like that?</div>
+            <div className="par">Manu will find out. He always does.</div>
             <div className="btn-hor">
-              <button className="secondary" style={{ width: 'auto', padding: '10px 16px' }} onClick={() => navigate('/failed')}>
+              <button className="secondary" style={{ padding: '10px 16px' }} onClick={() => navigate('/failed')}>
                 Yes, I'm leaving
               </button>
-              <button className="main" style={{ width: 'auto', padding: '10px 16px' }} onClick={() => setCancelOpen(false)}>
-                GO BACK
+              <button className="main" style={{ padding: '10px 16px' }} onClick={() => setCancelOpen(false)}>
+                Go Back
               </button>
             </div>
           </div>
@@ -152,7 +178,12 @@ export default function PaymentPage() {
             <div className="title">{selected ? METHOD_LABEL[selected] : ''}</div>
             <button className="sheet-close" onClick={() => setMobileDetailOpen(false)}>✕</button>
           </div>
-          {detailContent()}
+          <div className="sheet-body">
+            {detailContent()}
+          </div>
+          <div className="sheet-action">
+            <button className="main" onClick={handlePaid}>I've Paid</button>
+          </div>
         </div>
         <div className="modal-bg" onClick={() => setMobileDetailOpen(false)} />
       </div>
@@ -168,20 +199,21 @@ export default function PaymentPage() {
                 <span className="info-value">Manu</span>
               </div>
               <div className="info-row">
-                <span className="info-label">Amount</span>
-                <span className="info-value" style={{ color: 'var(--gold)', fontWeight: 700 }}>PHP {amount}</span>
-              </div>
-              <div className="info-row">
-                <span className="info-label">Method</span>
-                <span className="info-value" style={{ color: selected ? 'var(--gold)' : 'var(--text-muted)' }}>
+                <span className="info-label">Payment Method</span>
+                <span className="info-value" style={{ color: selected ? undefined : 'var(--text-muted)' }}>
                   {selected ? METHOD_LABEL[selected] : '—'}
                 </span>
+              </div>
+              <div className="info-row">
+                <span className="info-label">Amount</span>
+                <span className="info-value" style={{ color: 'var(--gold)', fontWeight: 700 }}>PHP {amount}</span>
               </div>
             </div>
           </div>
 
-          <div className="card">
+          <div id="method-section" className={`card${methodError ? ' card--error' : ''}`}>
             <div className="title">Select a Payment Method</div>
+            {methodError && <div className="method-error">Please select a payment method first.</div>}
             <div className="button-set">
               <div onClick={() => handleSelect('gcash')} className={`btn-pm${selected === 'gcash' ? ' btn-pm--selected' : ''}`}>
                 <div className="icon"><img src={gcashImg} alt="GCash" /></div>
@@ -211,6 +243,7 @@ export default function PaymentPage() {
               </div>
             </div>
           </div>
+
         </div>
 
         {/* ── RIGHT: wide — detail area + instructions + actions ── */}
@@ -247,8 +280,24 @@ export default function PaymentPage() {
         </div>
       </div>
 
-      {/* Mobile: fixed bottom sheet — buttons only */}
+      {/* Mobile: fixed bottom sheet — instructions + buttons */}
       <div className="mobile-bottom-sheet">
+        <div className="card mobile-instructions">
+          <button className="accordion-toggle" onClick={() => setInstructionsOpen(o => !o)}>
+            <span className="par" style={{ fontWeight: 600 }}>Payment Instructions</span>
+            <span className={`accordion-chevron${instructionsOpen ? ' open' : ''}`}>‹</span>
+          </button>
+          {instructionsOpen && (
+            <div className="sub">
+              <ol>
+                <li>Select a payment method.</li>
+                <li>Follow the steps that open.</li>
+                <li>After payment, click the "I've Paid" button.</li>
+                <li>And, you're done with your payment.</li>
+              </ol>
+            </div>
+          )}
+        </div>
         {renderButtons()}
       </div>
     </>

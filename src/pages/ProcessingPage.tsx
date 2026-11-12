@@ -1,6 +1,20 @@
+import { useEffect } from 'react'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import adImg from '../assets/ad.jpg'
 
 export default function ProcessingPage() {
+  const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
+  const amount = searchParams.get('amount')
+  const method = searchParams.get('method')
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      navigate(`/invoice?amount=${amount}&method=${method}`, { replace: true })
+    }, 4000)
+    return () => clearTimeout(t)
+  }, [])
+
   const handleReturn = () => {
     window.location.href = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ1yPSauJ-G6uOTTPc3jFOTeyPtJHIZal7hg&s'
   }

@@ -21,6 +21,7 @@
   gap: 20px;
   overflow-y: auto;
   overflow-x: hidden;
+  border-radius: 0 var(--r-xl) var(--r-xl) 0;
 }
 
 /* ─── Buttons ────────────────────────────────────────────────── */
@@ -29,17 +30,16 @@ button.main {
   padding: 14px 20px;
   border-radius: var(--r-md);
   color: #fff;
-  background: linear-gradient(135deg, #D4A630 0%, var(--gold-dark) 100%);
+  background: #ce5e05;
   border: none;
   font-weight: 600;
   font-size: 13px;
-  letter-spacing: 0.06em;
   cursor: pointer;
-  box-shadow: 0 4px 16px var(--gold-glow);
+  box-shadow: 0 4px 16px rgba(206, 94, 5, 0.35);
 }
 button.main:hover {
-  filter: brightness(1.08);
-  box-shadow: 0 6px 24px var(--gold-glow);
+  filter: brightness(1.1);
+  box-shadow: 0 6px 24px rgba(206, 94, 5, 0.45);
 }
 
 button.secondary {
@@ -129,7 +129,7 @@ button.tertiary:hover { color: var(--text); filter: none; }
   border-radius: var(--r-lg);
   display: flex;
   gap: 14px;
-  align-items: center;
+  align-items: flex-start;
   cursor: pointer;
   background: var(--surface);
   user-select: none;
@@ -308,13 +308,29 @@ button.tertiary:hover { color: var(--text); filter: none; }
   background: var(--surface-raised);
   border-top: 1px solid var(--border-raised);
   border-radius: 24px 24px 0 0;
-  padding: 12px 20px 32px;
+  padding: 12px 20px 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
   animation: sheetIn 0.35s cubic-bezier(0.32, 0.72, 0, 1);
   max-height: 85vh;
+  overflow: hidden;
+}
+
+.sheet-body {
+  flex: 1;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+}
+
+.sheet-action {
+  flex-shrink: 0;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
 }
 
 @keyframes sheetIn {
@@ -353,6 +369,17 @@ button.tertiary:hover { color: var(--text); filter: none; }
   flex-shrink: 0;
 }
 .sheet-close:hover { color: var(--text); border-color: var(--border-raised); filter: none; }
+
+/* ─── Mobile: footer instructions card ──────────────────────── */
+.mobile-instructions {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+  border-radius: 0;
+}
 
 /* ─── Mobile: fixed action bottom sheet ─────────────────────── */
 .mobile-bottom-sheet {
@@ -447,7 +474,7 @@ button.tertiary:hover { color: var(--text); filter: none; }
     width: 100%;
     padding: 16px;
     gap: 12px;
-    padding-bottom: 160px;
+    padding-bottom: 240px;
   }
 
   .right { display: none; }
@@ -456,4 +483,134 @@ button.tertiary:hover { color: var(--text); filter: none; }
 
   .enter-card { padding: 24px !important; }
   .status { padding: 32px 20px; }
+}
+
+/* ─── Method error state ─────────────────────────────────────── */
+.card--error {
+  border-color: var(--danger) !important;
+  box-shadow: 0 0 0 1px var(--danger) inset;
+  animation: shake 0.35s ease;
+}
+
+.method-error {
+  font-size: 12px;
+  color: var(--danger);
+  font-weight: 500;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-6px); }
+  40%       { transform: translateX(6px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px); }
+}
+
+/* ─── Invoice page ───────────────────────────────────────────── */
+.invoice {
+  width: 100%;
+  max-width: 420px;
+  margin: 48px auto;
+  padding: 32px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-raised);
+  border-radius: var(--r-xl);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.invoice-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.invoice-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.invoice-ref {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  font-family: monospace;
+  letter-spacing: 0.04em;
+}
+
+.invoice-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.invoice-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4caf7d;
+  box-shadow: 0 0 6px rgba(76, 175, 125, 0.6);
+  flex-shrink: 0;
+}
+
+.invoice-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.invoice-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.invoice-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.invoice-value {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.invoice-divider {
+  height: 1px;
+  background: var(--border-raised);
+  margin: 4px 0;
+}
+
+.invoice-row--total .invoice-label {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.invoice-total {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.invoice-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+@media screen and (max-width: 640px) {
+  .invoice {
+    margin: 24px 16px;
+    padding: 24px;
+  }
 }
